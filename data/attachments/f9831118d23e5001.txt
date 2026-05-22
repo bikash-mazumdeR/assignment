@@ -1,0 +1,2 @@
+2026-05-22 12:31:59 [info]: API GET Request to: https://********/booking
+2026-05-22 12:31:59 [info]: API Response Status: 200
