@@ -128,11 +128,6 @@ Our UI testing (targeting `https://www.saucedemo.com/`) focuses on user journey 
 | **Checkout** | `tests/ui/checkout.spec.ts` | Multi-step form validation, Order completion |
 | **E2E Journey**| `tests/ui/e2e-flow.spec.ts`| Full flow from login to order confirmation |
 
-## 📈 Future Scalability
-- **Visual Testing:** Easily integrate Playwright's `toHaveScreenshot`.
-- **Mobile:** Extend `playwright.config.ts` with mobile device projects.
-- **Performance:** Integrate with `k6` using the existing Request Builders.
-
 ## 📖 Team Onboarding
 
 For a deep dive into writing tests, adding new page objects, and understanding our coding conventions, please refer to the [Team Onboarding Guide](ONBOARDING.md).

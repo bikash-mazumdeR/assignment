@@ -1,8 +1,6 @@
 # 🚀 Team Onboarding Guide
 
-![Playwright Tests](https://github.com/bikash-mazumdeR/assignment/actions/workflows/playwright-ci.yml/badge.svg)
-
-Welcome to the Enterprise Playwright Automation Framework. This guide will get you productive within your first day.
+Welcome to the Playwright Automation Framework. This guide will get you productive within your first day.
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
