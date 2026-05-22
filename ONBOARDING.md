@@ -1,6 +1,6 @@
 # 🚀 Team Onboarding Guide
 
-![Playwright Tests](https://github.com/workspace/assignment/actions/workflows/playwright-ci.yml/badge.svg)
+![Playwright Tests](https://github.com/bikash-mazumdeR/assignment/actions/workflows/playwright-ci.yml/badge.svg)
 
 Welcome to the Enterprise Playwright Automation Framework. This guide will get you productive within your first day.
 
@@ -42,7 +42,7 @@ Welcome to the Enterprise Playwright Automation Framework. This guide will get y
 
 ```bash
 # 1. Clone the repository
-git clone <repo-url>
+git clone https://github.com/bikash-mazumdeR/assignment.git
 cd assignment
 
 # 2. Install dependencies
@@ -356,27 +356,19 @@ npx playwright test tests/ui/login.spec.ts --debug
 
 ---
 
-## CI/CD Pipeline
+## CI/CD Pipeline & Reports
 
-### Pipeline Flow
-```mermaid
-graph LR
-    A[Push/PR to Main] --> B[Install Dependencies]
-    B --> C[Install Playwright Browsers]
-    C --> D[Run Linting & Type Checks]
-    D --> E[Run API & UI Test Suites]
-    E --> F[Upload Test Reports & Failure Traces]
-```
+### How to Trigger a Build
+- **Automatic:** Every push or PR to `main` triggers the pipeline.
+- **Manual:** Navigate to the **Actions** tab in GitHub, select "Playwright Tests", and click **Run workflow**.
 
-### What Triggers the Pipeline
-- **Push** to `main` or `master` branches
-- **Pull Request** targeting `main` or `master`
-
-### Environment Variables in CI
-Sensitive values are stored in **GitHub Secrets**:
-- `BASE_URL`, `API_URL` — Application URLs
-- `API_USER`, `API_PASS` — API credentials
-- `UI_USER`, `UI_PASS` — UI credentials
+### Accessing Test Reports
+1. **Live Allure Report:** [https://bikash-mazumdeR.github.io/assignment/](https://bikash-mazumdeR.github.io/assignment/)
+   - This link always redirects to the results of the latest execution.
+2. **Artifacts:**
+   - Go to the **Actions** tab in GitHub.
+   - Click on a specific workflow run.
+   - Scroll down to the **Artifacts** section to download the `playwright-report` or `allure-results`.
 
 ### Viewing Results
 1. Go to the **Actions** tab in GitHub

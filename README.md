@@ -1,6 +1,6 @@
 # Enterprise Playwright Automation Framework
 
-![Playwright Tests](https://github.com/workspace/assignment/actions/workflows/playwright-ci.yml/badge.svg)
+![Playwright Tests](https://github.com/bikash-mazumdeR/assignment/actions/workflows/playwright-ci.yml/badge.svg)
 
 This is a production-ready, enterprise-grade test automation framework for Web UI and API testing, built with Playwright, TypeScript, and Node.js.
 
@@ -12,24 +12,25 @@ This is a production-ready, enterprise-grade test automation framework for Web U
 - **Strict Typing:** Full TypeScript implementation with Zod schema validation for API contracts.
 - **Parallel Execution:** Configured for high-speed parallel execution in CI/CD.
 - **Enterprise Logging:** Structured logging with Winston (Console + File).
-- **Advanced Reporting:** Integrated with Playwright HTML Reporter and Allure Reports.
-- **CI/CD Ready:** Complete GitHub Actions workflow included.
+- **Consolidated Allure Reporting:** Integrated Allure reports with cross-job result aggregation and GitHub Pages hosting.
+- **CI/CD Ready:** Complete GitHub Actions workflow with automatic report deployment.
 
 ## 📁 Project Structure
 
 ```text
-├── .github/workflows/       # CI/CD Pipeline
+├── .github/workflows/       # CI/CD Pipeline (GitHub Actions)
 ├── config/                  # Environment and Global Constants
 ├── src/
-│   ├── core/                # BasePage, RequestWrapper, Logger
-│   ├── pages/               # UI Page Objects
-│   ├── api/                 # API Clients and Request Builders
+│   ├── core/                # BasePage, RequestWrapper, Logger, RedactionHelper
+│   ├── pages/               # UI Page Objects (SauceDemo)
+│   ├── api/                 # API Clients and Request Builders (Restful-Booker)
 │   ├── schemas/             # Zod Validation Schemas
 │   ├── fixtures/            # Custom Playwright Fixtures
-│   └── utils/               # Data Generators and Helpers
+│   └── constants/           # Centralized Selectors
 ├── tests/
 │   ├── ui/                  # Web UI Spec Files
-│   └── api/                 # API Spec Files
+│   ├── api/                 # API Spec Files
+│   └── setup/               # Global Authentication Setup
 ├── playwright.config.ts      # Framework Configuration
 └── README.md                # Documentation
 ```
@@ -38,7 +39,7 @@ This is a production-ready, enterprise-grade test automation framework for Web U
 
 1. **Clone the repository:**
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/bikash-mazumdeR/assignment.git
    cd assignment
    ```
 
@@ -53,7 +54,7 @@ This is a production-ready, enterprise-grade test automation framework for Web U
    ```
 
 4. **Environment Configuration:**
-   Create `.env.qa` (or use the provided one) in `config/env/`.
+   Create `.env.qa` in `config/env/` using the structure from `.env.example`.
 
 ## 🏃 Execution Commands
 
@@ -61,7 +62,7 @@ This is a production-ready, enterprise-grade test automation framework for Web U
 - **Run UI tests only:** `npm run test:ui`
 - **Run API tests only:** `npm run test:api`
 - **Run Smoke tests:** `npm run test:smoke`
-- **Generate Allure Report:**
+- **Local Allure Generation:**
   ```bash
   npx allure generate allure-results --clean -o allure-report
   npx allure open allure-report
@@ -70,78 +71,45 @@ This is a production-ready, enterprise-grade test automation framework for Web U
 ## 🏗️ Architecture Decisions
 
 ### 1. Fixtures over Hooks
-We avoid `beforeEach` for object instantiation. Instead, we use fixtures to lazily initialize Page Objects and API clients. This ensures tests are truly independent and workers are utilized efficiently.
+We avoid `beforeEach` for object instantiation. Instead, we use fixtures (e.g., `bookingClient`, `loginPage`) to lazily initialize dependencies.
 
 ### 2. Base Abstractions
-`BasePage` and `RequestWrapper` provide a centralized layer for logging and smart waits. This makes the framework resilient to changes in the underlying Playwright API.
+`BasePage` and `RequestWrapper` provide a centralized layer for logging and smart waits.
 
 ### 3. Zod Schema Validation
-API tests don't just check status codes; they validate the entire response body against Zod schemas. This provides "Contract Testing" capabilities and catches breaking API changes instantly.
+API tests validate the entire response body against Zod schemas (e.g., `BookingSchema`, `BookingIdSchema`). This provides "Contract Testing" capabilities.
 
-## 🔄 CI/CD Pipeline
+## 🔄 CI/CD Pipeline & Reporting
 
-### Pipeline Architecture
+### Triggering Builds
+- **Push:** Automatically triggers on every push to `main` or `master`.
+- **Pull Request:** Automatically triggers when a PR is opened or updated targeting `main` or `master`.
+- **Manual:** Can be triggered via the "Run workflow" button in the GitHub Actions tab.
 
-```mermaid
-graph TD
-    A[Push / PR] --> B[Lint & Type Check]
-    B --> C[API Tests]
-    B --> D[UI Tests Matrix]
-    
-    subgraph UI Tests Matrix
-        D1[Chromium]
-        D2[Firefox]
-        D3[WebKit]
-    end
-    
-    C --> E[Upload API Report]
-    D1 --> F[Upload UI Report]
-    D2 --> F
-    D3 --> F
-    
-    F --> G[Upload Traces/Screenshots on Failure]
-```
-
-### Jobs
-| Job | Trigger | Purpose | Duration |
-|---|---|---|---|
-| `lint` | Push/PR | ESLint validation | ~30s |
-| `test-api` | After lint | API endpoint validation | ~2min |
-| `test-ui` | After lint | Cross-browser UI testing (matrix) | ~5min each |
-
-### Artifacts
-- **playwright-report**: HTML test report (retained 30 days)
-- **test-results**: Screenshots, videos, traces on failure (retained 7 days)
-
-### Secrets Configuration
-Configure these in GitHub → Settings → Secrets → Actions:
-- `BASE_URL`, `API_URL`, `API_USER`, `API_PASS`, `UI_USER`, `UI_PASS`
+### Accessing Reports
+1. **Consolidated Allure Report:** After every successful run, the report is deployed to [GitHub Pages](https://bikash-mazumdeR.github.io/assignment/).
+   - The root URL automatically redirects to the latest execution results.
+   - History is maintained for the last 20 runs.
+2. **Playwright Artifacts:** Raw HTML reports and failure traces/screenshots are available as artifacts in the GitHub Action run summary for 30 days.
 
 ## 🧪 API Test Strategy
 
 ### Approach
-Our API testing follows a **layered validation** approach:
+Our API testing (targeting `https://restful-booker.herokuapp.com`) follows a **layered validation** approach:
 
-1. **Status Code Validation** — Verify correct HTTP status codes for all scenarios
-2. **Schema Validation** — Zod schemas validate response structure and types (contract testing)
-3. **Data Integrity** — Verify response data matches request data
-4. **Authorization** — Test authenticated vs. unauthenticated access
-5. **Error Handling** — Validate proper error responses for invalid inputs
+1. **Status Code Validation** (e.g., `200 OK` for creation, `403 Forbidden` for unauthorized delete)
+2. **Schema Validation** using Zod (validating field types like `firstname: string`, `totalprice: number`)
+3. **Data Integrity** (verifying that the `BookingBuilder` payload matches the created record)
 
-### Coverage Matrix
-| Endpoint | Method | Positive | Negative | E2E |
-|---|---|---|---|---|
-| `/auth` | POST | ✅ Token generation | ✅ Invalid creds, missing fields, empty payload | — |
-| `/booking` | GET | ✅ List bookings | — | — |
-| `/booking/:id` | GET | ✅ Get by ID | ✅ Invalid ID (404) | ✅ |
-| `/booking` | POST | ✅ Create booking | ✅ Invalid payload | ✅ |
-| `/booking/:id` | PUT | ✅ Update booking | ✅ No auth (403), non-existent ID | ✅ |
-| `/booking/:id` | DELETE | ✅ Delete booking | ✅ No auth (403), non-existent ID | ✅ |
-
-### E2E Flow
-`Create Booking → Update Booking → Verify Update (GET) → Delete Booking → Verify Deletion (404)`
+### E2E Flow (Actual Implementation)
+`tests/api/e2e-booking-flow.spec.ts`:
+1. **Create Booking** (`POST /booking`)
+2. **Verify Record** (`GET /booking/:id`)
+3. **Update Record** (`PUT /booking/:id`)
+4. **Delete Record** (`DELETE /booking/:id`)
+5. **Verify Deletion** (`GET /booking/:id` -> `404 Not Found`)
 
 ## 📈 Future Scalability
 - **Visual Testing:** Easily integrate Playwright's `toHaveScreenshot`.
 - **Mobile:** Extend `playwright.config.ts` with mobile device projects.
-- **Performance:** Integrate with `k6` or use Playwright's request interception for basic load metrics.
+- **Performance:** Integrate with `k6` using the existing Request Builders.
