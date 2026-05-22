@@ -1,0 +1,40 @@
+{
+  "name": "assignment",
+  "version": "1.0.0",
+  "description": "Enterprise-grade Playwright framework for Web UI and API testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --project='chromium'",
+    "test:api": "npx playwright test tests/api/",
+    "test:smoke": "npx playwright test --grep @smoke",
+    "report:html": "npx playwright show-report",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.42.1",
+    "@types/node": "^20.11.24",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "allure-playwright": "^2.13.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-playwright": "^1.5.1",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^8.59.4"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "winston": "^3.11.0",
+    "zod": "^3.22.4"
+  }
+}
