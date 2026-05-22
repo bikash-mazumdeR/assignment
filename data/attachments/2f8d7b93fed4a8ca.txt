@@ -1,0 +1,3 @@
+2026-05-22 12:34:47 [info]: API DELETE Request to: https://********/booking/1
+2026-05-22 12:34:47 [info]: API Response Status: 403
+2026-05-22 12:34:47 [error]: API Error Response: Forbidden
