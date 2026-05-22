@@ -1,0 +1,64 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: setup/auth.setup.ts >> authenticate API
+- Location: tests/setup/auth.setup.ts:22:6
+
+# Error details
+
+```
+Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 405
+```
+
+# Test source
+
+```ts
+  1  | import { test as setup, expect } from '@playwright/test';
+  2  | import { LoginPage } from '@pages/LoginPage';
+  3  | import { env } from '@config/env.config';
+  4  | import * as path from 'path';
+  5  | import * as fs from 'fs';
+  6  | 
+  7  | export const STORAGE_STATE = path.join(__dirname, '../../playwright/.auth/user.json');
+  8  | 
+  9  | setup('authenticate', async ({ page }) => {
+  10 |   const loginPage = new LoginPage(page);
+  11 |   
+  12 |   await loginPage.open();
+  13 |   await loginPage.login(env.UI_USER, env.UI_PASS);
+  14 |   
+  15 |   // Wait for navigation or a specific element that confirms login
+  16 |   await expect(page).toHaveURL(/inventory.html/);
+  17 |   
+  18 |   // End of authentication steps.
+  19 |   await page.context().storageState({ path: STORAGE_STATE });
+  20 | });
+  21 | 
+  22 | setup('authenticate API', async ({ request }) => {
+  23 |   const response = await request.post(`${env.API_URL}/auth`, {
+  24 |     data: {
+  25 |       username: env.API_USER,
+  26 |       password: env.API_PASS,
+  27 |     },
+  28 |   });
+  29 |   
+> 30 |   expect(response.status()).toBe(200);
+     |                             ^ Error: expect(received).toBe(expected) // Object.is equality
+  31 |   const body = await response.json();
+  32 |   const token = body.token;
+  33 |   expect(token).toBeDefined();
+  34 | 
+  35 |   const apiTokenPath = path.join(__dirname, '../../playwright/.auth/api-token.json');
+  36 |   fs.mkdirSync(path.dirname(apiTokenPath), { recursive: true });
+  37 |   fs.writeFileSync(apiTokenPath, JSON.stringify({ token }, null, 2));
+  38 | });
+  39 | 
+```

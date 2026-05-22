@@ -1,0 +1,64 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: setup/auth.setup.ts >> authenticate
+- Location: tests/setup/auth.setup.ts:9:6
+
+# Error details
+
+```
+Error: page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL
+Call log:
+  - navigating to "", waiting until "networkidle"
+
+```
+
+# Test source
+
+```ts
+  1  | import { Page, Locator } from '@playwright/test';
+  2  | import { logger } from './Logger';
+  3  | import { redactValue, redactUrl } from './RedactionHelper';
+  4  | 
+  5  | export abstract class BasePage {
+  6  |   constructor(protected readonly page: Page) {}
+  7  | 
+  8  |   protected async navigate(path: string) {
+  9  |     logger.info(`Navigating to: ${redactUrl(path)}`);
+> 10 |     await this.page.goto(path, { waitUntil: 'networkidle' });
+     |                     ^ Error: page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL
+  11 |   }
+  12 | 
+  13 |   protected async click(locator: Locator, name: string) {
+  14 |     logger.info(`Clicking on: ${name}`);
+  15 |     await locator.waitFor({ state: 'visible' });
+  16 |     await locator.click();
+  17 |   }
+  18 | 
+  19 |   protected async fill(locator: Locator, value: string, name: string) {
+  20 |     const displayValue = redactValue(name, value);
+  21 |     logger.info(`Filling ${name} with value: ${displayValue}`);
+  22 |     await locator.waitFor({ state: 'visible' });
+  23 |     await locator.fill(value);
+  24 |   }
+  25 | 
+  26 |   protected async getText(locator: Locator): Promise<string> {
+  27 |     await locator.waitFor({ state: 'visible' });
+  28 |     return (await locator.textContent()) || '';
+  29 |   }
+  30 | 
+  31 |   protected async isVisible(locator: Locator): Promise<boolean> {
+  32 |     return await locator.isVisible();
+  33 |   }
+  34 | 
+  35 |   async waitForElement(locator: Locator) {
+  36 |     await locator.waitFor({ state: 'attached' });
+  37 |   }
+  38 | }
+  39 | 
+```
