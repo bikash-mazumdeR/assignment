@@ -1,8 +1,8 @@
-# Enterprise Playwright Automation Framework
+# Playwright Automation Framework
 
 ![Playwright Tests](https://github.com/bikash-mazumdeR/assignment/actions/workflows/playwright-ci.yml/badge.svg)
 
-This is a production-ready, enterprise-grade test automation framework for Web UI and API testing, built with Playwright, TypeScript, and Node.js.
+This is a test automation framework for Web UI and API testing, built with Playwright, TypeScript, and Node.js.
 
 ## 🚀 Key Features
 
@@ -82,8 +82,8 @@ API tests validate the entire response body against Zod schemas (e.g., `BookingS
 ## 🔄 CI/CD Pipeline & Reporting
 
 ### Triggering Builds
-- **Push:** Automatically triggers on every push to `main` or `master`.
-- **Pull Request:** Automatically triggers when a PR is opened or updated targeting `main` or `master`.
+- **Push:** Automatically triggers on every push to `main`.
+- **Pull Request:** Automatically triggers when a PR is opened or updated targeting `main`.
 - **Manual:** Can be triggered via the "Run workflow" button in the GitHub Actions tab.
 
 ### Accessing Reports
