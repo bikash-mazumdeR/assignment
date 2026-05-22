@@ -95,7 +95,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+        with:
+          fetch-depth: 0
+
       - name: Download All Results
         uses: actions/download-artifact@v4
         with:
@@ -103,18 +105,19 @@ jobs:
           merge-multiple: true
           path: allure-results
 
-      - name: Allure Report Action
-        uses: simple-elf/allure-report-action@master
-        if: always()
-        with:
-          allure_results: allure-results
-          allure_history: allure-history
-          keep_reports: 20
+      - name: Install Allure
+        run: |
+          npm install -g allure-commandline --save-dev
+
+      - name: Generate Allure Report
+        run: |
+          allure generate allure-results -o allure-report --clean
+        continue-on-error: true
 
       - name: Deploy report to Github Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-history
+          publish_dir: ./allure-report
           publish_branch: gh-pages
