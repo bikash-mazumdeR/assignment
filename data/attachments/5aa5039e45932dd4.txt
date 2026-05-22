@@ -1,0 +1,12 @@
+2026-05-22 12:45:24 [info]: Navigating to: https://********/
+2026-05-22 12:45:27 [info]: Filling Username with value: ********
+2026-05-22 12:45:27 [info]: Filling Password with value: ********
+2026-05-22 12:45:27 [info]: Clicking on: Login Button
+2026-05-22 12:45:27 [info]: Clicking on: Add Sauce Labs Backpack to cart
+2026-05-22 12:45:27 [info]: Clicking on: Cart Link
+2026-05-22 12:45:27 [info]: Clicking on: Checkout Button
+2026-05-22 12:45:27 [info]: Filling First Name with value: John
+2026-05-22 12:45:27 [info]: Filling Last Name with value: Doe
+2026-05-22 12:45:28 [info]: Filling Postal Code with value: 12345
+2026-05-22 12:45:28 [info]: Clicking on: Continue Button
+2026-05-22 12:45:28 [info]: Clicking on: Finish Button
