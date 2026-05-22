@@ -44,9 +44,9 @@ jobs:
       - name: Run API tests
         run: npx playwright test --project=api
         env:
-          API_URL: ${{ secrets.API_URL || 'https://restful-booker.herokuapp.com' }}
-          API_USER: ${{ secrets.API_USER || 'admin' }}
-          API_PASS: ${{ secrets.API_PASS || 'password123' }}
+          API_URL: ${{ secrets.API_URL }}
+          API_USER: ${{ secrets.API_USER }}
+          API_PASS: ${{ secrets.API_PASS }}
           LOG_LEVEL: info
       - name: Upload Allure Results
         uses: actions/upload-artifact@v4
@@ -77,9 +77,9 @@ jobs:
       - name: Run UI tests (${{ matrix.browser }})
         run: npx playwright test --project=${{ matrix.browser }}
         env:
-          BASE_URL: ${{ secrets.BASE_URL || 'https://www.saucedemo.com/' }}
-          UI_USER: ${{ secrets.UI_USER || 'standard_user' }}
-          UI_PASS: ${{ secrets.UI_PASS || 'secret_sauce' }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+          UI_USER: ${{ secrets.UI_USER }}
+          UI_PASS: ${{ secrets.UI_PASS }}
           LOG_LEVEL: info
       - name: Upload Allure Results
         uses: actions/upload-artifact@v4
