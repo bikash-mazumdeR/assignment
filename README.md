@@ -1,7 +1,5 @@
 # Playwright Automation Framework
 
-![Playwright Tests](https://github.com/bikash-mazumdeR/assignment/actions/workflows/playwright-ci.yml/badge.svg)
-
 This is a test automation framework for Web UI and API testing, built with Playwright, TypeScript, and Node.js.
 
 ## 🚀 Key Features
