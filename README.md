@@ -113,3 +113,7 @@ Our API testing (targeting `https://restful-booker.herokuapp.com`) follows a **l
 - **Visual Testing:** Easily integrate Playwright's `toHaveScreenshot`.
 - **Mobile:** Extend `playwright.config.ts` with mobile device projects.
 - **Performance:** Integrate with `k6` using the existing Request Builders.
+
+## 📖 Team Onboarding
+
+For a deep dive into writing tests, adding new page objects, and understanding our coding conventions, please refer to the [Team Onboarding Guide](ONBOARDING.md).
