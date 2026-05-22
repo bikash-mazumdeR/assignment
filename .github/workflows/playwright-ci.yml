@@ -44,9 +44,12 @@ jobs:
       - name: Run API tests
         run: npx playwright test --project=api
         env:
+          BASE_URL: ${{ secrets.BASE_URL }}
           API_URL: ${{ secrets.API_URL }}
           API_USER: ${{ secrets.API_USER }}
           API_PASS: ${{ secrets.API_PASS }}
+          UI_USER: ${{ secrets.UI_USER }}
+          UI_PASS: ${{ secrets.UI_PASS }}
           LOG_LEVEL: info
       - name: Upload Allure Results
         uses: actions/upload-artifact@v4
@@ -78,6 +81,9 @@ jobs:
         run: npx playwright test --project=${{ matrix.browser }}
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
+          API_URL: ${{ secrets.API_URL }}
+          API_USER: ${{ secrets.API_USER }}
+          API_PASS: ${{ secrets.API_PASS }}
           UI_USER: ${{ secrets.UI_USER }}
           UI_PASS: ${{ secrets.UI_PASS }}
           LOG_LEVEL: info
