@@ -1,4 +1,0 @@
-2026-05-22 11:46:04 [info]: Navigating to: https://********/
-2026-05-22 11:46:05 [info]: Filling Username with value: ********
-2026-05-22 11:46:05 [info]: Filling Password with value: ********
-2026-05-22 11:46:05 [info]: Clicking on: Login Button

@@ -1,0 +1,13 @@
+2026-05-22 11:54:40 [info]: API POST Request to: https://********/booking
+2026-05-22 11:54:41 [info]: API Response Status: 200
+2026-05-22 11:54:41 [info]: Using token from playwright/.auth/api-token.json
+2026-05-22 11:54:41 [info]: API PUT Request to: https://********/booking/2093
+2026-05-22 11:54:41 [info]: API Response Status: 200
+2026-05-22 11:54:41 [info]: API GET Request to: https://********/booking/2093
+2026-05-22 11:54:41 [info]: API Response Status: 200
+2026-05-22 11:54:41 [info]: Using token from playwright/.auth/api-token.json
+2026-05-22 11:54:41 [info]: API DELETE Request to: https://********/booking/2093
+2026-05-22 11:54:41 [info]: API Response Status: 201
+2026-05-22 11:54:41 [info]: API GET Request to: https://********/booking/2093
+2026-05-22 11:54:41 [info]: API Response Status: 404
+2026-05-22 11:54:41 [error]: API Error Response: Not Found

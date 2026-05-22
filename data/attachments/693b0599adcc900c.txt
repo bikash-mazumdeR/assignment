@@ -1,0 +1,2 @@
+2026-05-22 11:54:39 [info]: API POST Request to: https://********/auth
+2026-05-22 11:54:39 [info]: API Response Status: 200
