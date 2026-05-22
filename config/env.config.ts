@@ -4,8 +4,10 @@ import path from 'path';
 const ENV = process.env.NODE_ENV || 'qa';
 const envPath = path.resolve(__dirname, `env/.env.${ENV}`);
 
+// Load from .env file FIRST (for local development)
 dotenv.config({ path: envPath });
 
+// Then override with secrets/environment variables (for CI/CD and production)
 export const env = {
   NODE_ENV: ENV,
   BASE_URL: process.env.BASE_URL || '',
