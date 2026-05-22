@@ -1,0 +1,4 @@
+2026-05-22 12:49:09 [info]: Using token from playwright/.auth/api-token.json
+2026-05-22 12:49:09 [info]: API PUT Request to: https://********/booking/9999999
+2026-05-22 12:49:09 [info]: API Response Status: 405
+2026-05-22 12:49:09 [error]: API Error Response: Method Not Allowed
