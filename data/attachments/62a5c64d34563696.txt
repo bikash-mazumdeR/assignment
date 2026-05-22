@@ -1,7 +1,0 @@
-2026-05-22 12:49:56 [info]: Clicking on: Add Sauce Labs Backpack to cart
-2026-05-22 12:49:57 [info]: Clicking on: Cart Link
-2026-05-22 12:49:58 [info]: Clicking on: Checkout Button
-2026-05-22 12:49:58 [info]: Filling First Name with value: John
-2026-05-22 12:49:58 [info]: Filling Last Name with value: Doe
-2026-05-22 12:49:58 [info]: Filling Postal Code with value: 12345
-2026-05-22 12:49:58 [info]: Clicking on: Continue Button

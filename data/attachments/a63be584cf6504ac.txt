@@ -1,5 +1,0 @@
-2026-05-22 12:49:08 [info]: API POST Request to: https://********/booking
-2026-05-22 12:49:08 [info]: API Response Status: 200
-2026-05-22 12:49:08 [info]: Using token from playwright/.auth/api-token.json
-2026-05-22 12:49:08 [info]: API DELETE Request to: https://********/booking/4542
-2026-05-22 12:49:08 [info]: API Response Status: 201

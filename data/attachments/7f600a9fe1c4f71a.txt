@@ -1,2 +1,0 @@
-2026-05-22 12:49:47 [info]: Clicking on: Add Sauce Labs Backpack to cart
-2026-05-22 12:49:50 [info]: Clicking on: Remove Sauce Labs Backpack from cart
