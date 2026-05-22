@@ -109,6 +109,25 @@ Our API testing (targeting `https://restful-booker.herokuapp.com`) follows a **l
 4. **Delete Record** (`DELETE /booking/:id`)
 5. **Verify Deletion** (`GET /booking/:id` -> `404 Not Found`)
 
+## 🖥️ UI Test Strategy
+
+### Approach
+Our UI testing (targeting `https://www.saucedemo.com/`) focuses on user journey reliability across different platforms:
+
+1. **Page Object Model (POM):** Every page (Login, Inventory, Cart, Checkout) is modeled as a class in `src/pages/`, encapsulating selectors and interactions.
+2. **Global Authentication:** We use a `setup` project (`tests/setup/auth.setup.ts`) to login once and save the storage state. All subsequent tests reuse this state to save time and reduce flake.
+3. **Cross-Browser Matrix:** Tests are executed in parallel across **Chromium**, **Firefox**, and **Webkit** (Safari) to ensure cross-platform compatibility.
+4. **Resilient Selectors:** Prioritizing user-facing attributes (e.g., `data-test`) over fragile CSS/XPath.
+
+### Coverage Matrix
+| Feature | Project | Key Actions Validated |
+|---|---|---|
+| **Login** | `tests/ui/login.spec.ts` | Valid login, Error handling for locked-out users |
+| **Catalog** | `tests/ui/catalog.spec.ts` | Product sorting, Adding items to cart, Badge updates |
+| **Cart** | `tests/ui/cart.spec.ts` | Item persistence, Removal from cart, Navigation |
+| **Checkout** | `tests/ui/checkout.spec.ts` | Multi-step form validation, Order completion |
+| **E2E Journey**| `tests/ui/e2e-flow.spec.ts`| Full flow from login to order confirmation |
+
 ## 📈 Future Scalability
 - **Visual Testing:** Easily integrate Playwright's `toHaveScreenshot`.
 - **Mobile:** Extend `playwright.config.ts` with mobile device projects.
