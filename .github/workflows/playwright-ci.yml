@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [main, master]
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   lint:
     name: Lint & Type Check
@@ -45,12 +42,13 @@ jobs:
           API_USER: ${{ secrets.API_USER || 'admin' }}
           API_PASS: ${{ secrets.API_PASS || 'password123' }}
           LOG_LEVEL: info
-      - uses: actions/upload-artifact@v4
+      - name: Upload Allure Results
+        uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: api-test-report
-          path: playwright-report/
-          retention-days: 30
+          name: allure-results-api
+          path: allure-results/
+          retention-days: 1
 
   test-ui:
     name: UI Tests (${{ matrix.browser }})
@@ -77,15 +75,51 @@ jobs:
           UI_USER: ${{ secrets.UI_USER || 'standard_user' }}
           UI_PASS: ${{ secrets.UI_PASS || 'secret_sauce' }}
           LOG_LEVEL: info
-      - uses: actions/upload-artifact@v4
+      - name: Upload Allure Results
+        uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ui-test-report-${{ matrix.browser }}
-          path: playwright-report/
-          retention-days: 30
-      - uses: actions/upload-artifact@v4
-        if: failure()
+          name: allure-results-ui-${{ matrix.browser }}
+          path: allure-results/
+          retention-days: 1
+
+  generate-report:
+    name: Generate Allure Report
+    needs: [test-api, test-ui]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          name: test-results-${{ matrix.browser }}
-          path: test-results/
-          retention-days: 7
+          node-version: lts/*
+      
+      - name: Download All Results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: allure-results-*
+          merge-multiple: true
+          path: allure-results
+
+      - name: Get Allure History
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Allure Report Action
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        with:
+          allure_results: allure-results
+          allure_history: allure-history
+          keep_reports: 20
+
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: allure-history
