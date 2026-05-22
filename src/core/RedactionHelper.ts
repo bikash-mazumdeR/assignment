@@ -1,6 +1,6 @@
 const SENSITIVE_KEYS = ['password', 'token', 'username', 'secret', 'auth', 'url'];
 
-export function redact(data: any): any {
+export function redact(data: unknown): unknown {
   if (typeof data !== 'object' || data === null) {
     return data;
   }
@@ -9,14 +9,15 @@ export function redact(data: any): any {
     return data.map(redact);
   }
 
-  const redacted: any = {};
-  for (const key in data) {
+  const dataObj = data as Record<string, unknown>;
+  const redacted: Record<string, unknown> = {};
+  for (const key in dataObj) {
     if (SENSITIVE_KEYS.some(s => key.toLowerCase().includes(s))) {
       redacted[key] = '********';
-    } else if (typeof data[key] === 'object') {
-      redacted[key] = redact(data[key]);
+    } else if (typeof dataObj[key] === 'object') {
+      redacted[key] = redact(dataObj[key]);
     } else {
-      redacted[key] = data[key];
+      redacted[key] = dataObj[key];
     }
   }
   return redacted;
