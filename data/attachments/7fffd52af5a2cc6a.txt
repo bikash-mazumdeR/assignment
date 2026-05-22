@@ -1,4 +1,0 @@
-2026-05-22 13:38:57 [info]: Using token from playwright/.auth/api-token.json
-2026-05-22 13:38:57 [info]: API DELETE Request to: https://********/booking/9999999
-2026-05-22 13:38:57 [info]: API Response Status: 405
-2026-05-22 13:38:57 [error]: API Error Response: Method Not Allowed
